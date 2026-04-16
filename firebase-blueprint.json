@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Core user authentication and account data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "subscriptionTier": { "type": "string", "enum": ["free", "basic", "prime", "ultimate"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "subscriptionTier"]
+    },
+    "Profile": {
+      "title": "Profile",
+      "description": "Hybrid Matrimony + Social + Professional profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "matrimony": {
+          "type": "object",
+          "properties": {
+            "age": { "type": "number" },
+            "religion": { "type": "string" },
+            "caste": { "type": "string" },
+            "height": { "type": "string" },
+            "salary": { "type": "string" }
+          }
+        },
+        "social": {
+          "type": "object",
+          "properties": {
+            "bio": { "type": "string" },
+            "interests": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "jobTitle": { "type": "string" },
+            "company": { "type": "string" },
+            "skills": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "isVerified": { "type": "boolean" },
+        "visibility": { "type": "string", "enum": ["public", "restricted"] }
+      },
+      "required": ["uid", "gender"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Social media post or reel",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorUid": { "type": "string" },
+        "type": { "type": "string", "enum": ["post", "reel"] },
+        "mediaUrl": { "type": "string", "format": "uri" },
+        "caption": { "type": "string" },
+        "likesCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["authorUid", "type", "mediaUrl"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Real-time chat message",
+      "type": "object",
+      "properties": {
+        "senderUid": { "type": "string" },
+        "receiverUid": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["senderUid", "receiverUid", "text"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User account documents"
+    },
+    "/profiles/{uid}": {
+      "schema": "Profile",
+      "description": "Hybrid profile documents"
+    },
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Social feed content"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Direct message threads"
+    }
+  }
+}

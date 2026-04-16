@@ -1,0 +1,6 @@
+{
+  "name": "Velora",
+  "description": "A high-trust hybrid Matrimony + Social Networking platform for the modern Indian audience.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["AI Matchmaking", "Real-time Messaging", "KYC Verification"]
+}

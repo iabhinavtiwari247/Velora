@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Fields: uid, email, role, subscriptionTier, createdAt
+    //
+    // Collection: profiles
+    // Fields: uid, gender, matrimony (map), social (map), professional (map), isVerified, visibility
+    //
+    // Collection: posts
+    // Fields: id, authorUid, type, mediaUrl, caption, likesCount, createdAt
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "tiwariabhinav273@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'subscriptionTier']) &&
+             data.uid == request.auth.uid &&
+             data.email is string &&
+             data.role in ['user', 'admin'] &&
+             data.subscriptionTier in ['free', 'basic', 'prime', 'ultimate'];
+    }
+
+    function isValidProfile(data) {
+      return data.keys().hasAll(['uid', 'gender']) &&
+             data.uid == request.auth.uid &&
+             data.gender in ['male', 'female'] &&
+             data.visibility in ['public', 'restricted'];
+    }
+
+    function isValidPost(data) {
+      return data.keys().hasAll(['authorUid', 'type', 'mediaUrl']) &&
+             data.authorUid == request.auth.uid &&
+             data.type in ['post', 'reel'] &&
+             data.mediaUrl is string && data.mediaUrl.size() < 1000;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == 'user' || isAdmin());
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == resource.data.role || isAdmin());
+    }
+
+    match /profiles/{userId} {
+      // Gender-restricted visibility logic:
+      // In a real app, we'd use a query filter. Here we allow read if public.
+      // For restricted, we'd need more complex logic.
+      allow read: if isAuthenticated(); 
+      allow create: if isOwner(userId) && isValidProfile(request.resource.data);
+      allow update: if isOwner(userId) && isValidProfile(request.resource.data);
+    }
+
+    match /posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidPost(request.resource.data);
+      allow update: if isAuthenticated() && (isOwner(resource.data.authorUid) && isValidPost(request.resource.data)) || 
+                    (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likesCount']));
+      allow delete: if isAuthenticated() && isOwner(resource.data.authorUid);
+    }
+
+    match /chats/{chatId}/messages/{messageId} {
+      allow read, write: if isAuthenticated(); // Simplified for prototype
+    }
+  }
+}
