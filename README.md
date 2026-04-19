@@ -8,6 +8,8 @@
 <p align="center"><em>Connected by Heart, Committed for Life</em></p>
 
 ## An Underdevelopement start-up by an average student shaping himself into a future Entreprenuer.
+<img width="1904" height="899" alt="Screenshot 2026-04-20 010440" src="https://github.com/user-attachments/assets/b67acbfc-563c-4200-92e6-5e89f9afd5ef" />
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-maroon?style=flat-square"/>
@@ -19,6 +21,13 @@
 
 ---
 Project Report - [https://drive.google.com/file/d/1wtoJIBNuUHunVK1vgm7zsW_ktQNN2eqH/view?usp=sharing]
+
+<img width="1890" height="877" alt="Screenshot 2026-04-20 010807" src="https://github.com/user-attachments/assets/e617b3d6-b2d0-4bce-ab52-7f9c6eafd0a6" />
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<img width="1827" height="886" alt="Screenshot 2026-04-20 021018" src="https://github.com/user-attachments/assets/af14f1c6-23e4-447c-b385-087ebfc84494" />
+
 ## Table of Contents
 
 - [About Velora](#about-velora)
