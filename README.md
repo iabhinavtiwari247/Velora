@@ -18,7 +18,7 @@
 </p>
 
 ---
-
+Project Report - [https://drive.google.com/file/d/1wtoJIBNuUHunVK1vgm7zsW_ktQNN2eqH/view?usp=sharing]
 ## Table of Contents
 
 - [About Velora](#about-velora)
