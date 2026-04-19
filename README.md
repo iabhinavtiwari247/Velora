@@ -4,7 +4,7 @@
 
 </p>
 
-<h1 align="center">Velora — Matrimony & Dating</h1>
+<h1 align="center">Velora — Matrimony & Dating</h1> Founder : Abhinav Tiwari 
 <p align="center"><em>Connected by Heart, Committed for Life</em></p>
 
 ## An Underdevelopement start-up by an average student shaping himself into a future Entreprenuer.
