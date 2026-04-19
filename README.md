@@ -393,7 +393,7 @@ Velora is a proprietary platform. Contributions are by invitation only. If you a
 
 ## License
 
-© 2025 Velora Technologies Pvt. Ltd. All rights reserved.
+© April 2026 Velora Matrimony
 
 This software and its documentation are proprietary. Unauthorised copying, distribution, or modification of any part of this codebase is strictly prohibited.
 
